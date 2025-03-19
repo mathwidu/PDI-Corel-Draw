@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 
 public class ImagePanel extends JPanel {
     private JLabel originalImageLabel, transformedImageLabel;
-    private BufferedImage originalImage;
+    private ImageMatrix originalImageMatrix, transformedImageMatrix;
 
     public ImagePanel() {
         setLayout(new GridLayout(1, 2));
@@ -18,13 +18,61 @@ public class ImagePanel extends JPanel {
         add(transformedImageLabel);
     }
 
-    public void setOriginalImage(BufferedImage image) {
-        this.originalImage = image;
-        originalImageLabel.setIcon(new ImageIcon(image.getScaledInstance(originalImageLabel.getWidth(), originalImageLabel.getHeight(), Image.SCALE_SMOOTH)));
+    public void setOriginalImageMatrix(ImageMatrix imageMatrix) {
+        this.originalImageMatrix = imageMatrix;
+        this.transformedImageMatrix = null; // Resetamos a transformada ao carregar nova imagem
+        atualizarExibicao();
     }
 
-    public BufferedImage getOriginalImage() {
-        return originalImage;
+    public void setTransformedImageMatrix(ImageMatrix imageMatrix) {
+        this.transformedImageMatrix = imageMatrix;
+        atualizarExibicao();
+    }
+
+    public ImageMatrix getOriginalImageMatrix() {
+        return originalImageMatrix;
+    }
+
+    public ImageMatrix getTransformedImageMatrix() {
+        return transformedImageMatrix;
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        atualizarExibicao();
+    }
+
+    private void atualizarExibicao() {
+        int panelWidth = getWidth() / 2;
+        int panelHeight = getHeight();
+
+        if (panelWidth == 0 || panelHeight == 0) return;
+
+        if (originalImageMatrix != null) {
+            originalImageLabel.setIcon(new ImageIcon(escalarImagem(originalImageMatrix.toBufferedImage(), panelWidth, panelHeight)));
+        }
+
+        if (transformedImageMatrix != null) {
+            transformedImageLabel.setIcon(new ImageIcon(escalarImagem(transformedImageMatrix.toBufferedImage(), panelWidth, panelHeight)));
+        } else {
+            transformedImageLabel.setIcon(null);
+            transformedImageLabel.setText("Imagem Transformada");
+        }
+    }
+
+    private Image escalarImagem(BufferedImage image, int maxWidth, int maxHeight) {
+        double aspectRatio = (double) image.getWidth() / image.getHeight();
+        int newWidth, newHeight;
+
+        if (maxWidth / aspectRatio <= maxHeight) {
+            newWidth = maxWidth;
+            newHeight = (int) (maxWidth / aspectRatio);
+        } else {
+            newWidth = (int) (maxHeight * aspectRatio);
+            newHeight = maxHeight;
+        }
+
+        return image.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
     }
 }
-

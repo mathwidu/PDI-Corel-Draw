@@ -1,7 +1,7 @@
 import javax.swing.*;
+import java.awt.*;
 
 public class PDIInterface extends JFrame {
-
     private ImagePanel imagePanel;
     private MenuBarHandler menuBarHandler;
 
@@ -15,7 +15,14 @@ public class PDIInterface extends JFrame {
         menuBarHandler = new MenuBarHandler(this, imagePanel);
 
         setJMenuBar(menuBarHandler.getMenuBar());
-        add(imagePanel);
+        add(imagePanel, BorderLayout.CENTER);
+
+        // Atualiza o layout ao redimensionar
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                imagePanel.repaint();
+            }
+        });
 
         setVisible(true);
     }
@@ -24,4 +31,3 @@ public class PDIInterface extends JFrame {
         SwingUtilities.invokeLater(PDIInterface::new);
     }
 }
-
