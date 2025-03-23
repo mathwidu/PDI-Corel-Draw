@@ -1,3 +1,10 @@
+package br.com.pdi.menu;
+
+import br.com.pdi.view.PDIInterface;
+import br.com.pdi.view.ImagePanel;
+
+
+
 import javax.swing.*;
 
 public class MenuBarHandler {

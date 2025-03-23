@@ -1,3 +1,8 @@
+package br.com.pdi.view;
+
+
+import br.com.pdi.menu.MenuBarHandler;
+
 import javax.swing.*;
 import java.awt.*;
 

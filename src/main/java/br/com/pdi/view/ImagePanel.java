@@ -1,3 +1,7 @@
+package br.com.pdi.view;
+
+import br.com.pdi.model.ImageMatrix;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;

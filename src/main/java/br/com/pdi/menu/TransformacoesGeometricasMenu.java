@@ -1,6 +1,10 @@
+package br.com.pdi.menu;
+
+import br.com.pdi.view.ImagePanel;
+import br.com.pdi.model.ImageMatrix;
+
+
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class TransformacoesGeometricasMenu {
     private JMenu transformMenu;

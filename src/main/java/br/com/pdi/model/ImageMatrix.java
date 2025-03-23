@@ -1,3 +1,5 @@
+package br.com.pdi.model;
+
 import java.awt.image.BufferedImage;
 
 public class ImageMatrix {

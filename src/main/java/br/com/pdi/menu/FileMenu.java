@@ -1,3 +1,10 @@
+package br.com.pdi.menu;
+
+
+import br.com.pdi.view.PDIInterface;
+import br.com.pdi.view.ImagePanel;
+import br.com.pdi.model.ImageMatrix;
+
 import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
