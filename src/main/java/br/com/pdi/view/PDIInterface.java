@@ -22,7 +22,6 @@ public class PDIInterface extends JFrame {
         setJMenuBar(menuBarHandler.getMenuBar());
         add(imagePanel, BorderLayout.CENTER);
 
-        // Atualiza o layout ao redimensionar
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentResized(java.awt.event.ComponentEvent evt) {
                 imagePanel.repaint();

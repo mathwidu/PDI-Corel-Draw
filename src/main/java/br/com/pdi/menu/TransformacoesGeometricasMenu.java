@@ -2,7 +2,7 @@ package br.com.pdi.menu;
 
 import br.com.pdi.view.ImagePanel;
 import br.com.pdi.model.ImageMatrix;
-
+import br.com.pdi.transformacoes.TransformacoesGeometricas;
 
 import javax.swing.*;
 
@@ -42,12 +42,29 @@ public class TransformacoesGeometricasMenu {
             return;
         }
 
-        ImageMatrix novaImagem = new ImageMatrix(imagePanel.getOriginalImageMatrix().toBufferedImage());
-        
-        // Aqui aplicamos a transformação na nova imagem (não implementada ainda)
-        JOptionPane.showMessageDialog(null, "Aplicando " + tipo + " na imagem.");
-        
-        imagePanel.setTransformedImageMatrix(novaImagem);
+        ImageMatrix imagemOriginal = imagePanel.getOriginalImageMatrix();
+        ImageMatrix imagemTransformada = null;
+
+        try {
+            switch (tipo) {
+                case "translacao":
+                    int dx = Integer.parseInt(JOptionPane.showInputDialog("Deslocamento em X:"));
+                    int dy = Integer.parseInt(JOptionPane.showInputDialog("Deslocamento em Y:"));
+                    imagemTransformada = TransformacoesGeometricas.transladar(imagemOriginal, dx, dy);
+                    break;
+
+                // Os outros casos ainda serão implementados
+                default:
+                    JOptionPane.showMessageDialog(null, "Transformação não reconhecida.", "Erro", JOptionPane.ERROR_MESSAGE);
+                    return;
+            }
+
+            if (imagemTransformada != null) {
+                imagePanel.setTransformedImageMatrix(imagemTransformada);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro ao aplicar transformação: " + e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     public JMenu getTransformMenu() {

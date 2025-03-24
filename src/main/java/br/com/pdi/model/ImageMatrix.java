@@ -3,14 +3,20 @@ package br.com.pdi.model;
 import java.awt.image.BufferedImage;
 
 public class ImageMatrix {
-    private int[][] pixelMatrix; // Matriz da imagem
-    private int width, height; // Dimensões da imagem
+    private int[][] pixelMatrix;
+    private int width, height;
 
     public ImageMatrix(BufferedImage image) {
         carregarImagem(image);
     }
 
-    // Converte a BufferedImage em matriz de pixels
+
+    public ImageMatrix(int[][] pixelMatrix) {
+        this.pixelMatrix = pixelMatrix;
+        this.height = pixelMatrix.length;
+        this.width = pixelMatrix[0].length;
+    }
+
     private void carregarImagem(BufferedImage image) {
         width = image.getWidth();
         height = image.getHeight();
@@ -23,7 +29,6 @@ public class ImageMatrix {
         }
     }
 
-    // Converte a matriz de volta para BufferedImage
     public BufferedImage toBufferedImage() {
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
@@ -36,12 +41,10 @@ public class ImageMatrix {
         return image;
     }
 
-    // Getter para a matriz de pixels
     public int[][] getPixelMatrix() {
         return pixelMatrix;
     }
 
-    // Setter para modificar a matriz
     public void setPixelMatrix(int[][] newMatrix) {
         if (newMatrix.length == height && newMatrix[0].length == width) {
             this.pixelMatrix = newMatrix;
@@ -50,12 +53,10 @@ public class ImageMatrix {
         }
     }
 
-    // Obtém um pixel específico
     public int getPixel(int x, int y) {
         return pixelMatrix[y][x];
     }
 
-    // Define um pixel específico
     public void setPixel(int x, int y, int color) {
         pixelMatrix[y][x] = color;
     }

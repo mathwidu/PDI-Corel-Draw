@@ -17,7 +17,7 @@ public class MenuBarHandler {
         this.imagePanel = imagePanel;
         menuBar = new JMenuBar();
 
-        // Adicionando menus
+
         menuBar.add(new FileMenu(frame, imagePanel).getFileMenu());
         createTransformMenu();
         createFilterMenu();
@@ -26,14 +26,10 @@ public class MenuBarHandler {
     }
 
     private void createTransformMenu() {
-        JMenu transformMenu = new JMenu("Transformações Geométricas");
-        transformMenu.add(new JMenuItem("Transladar"));
-        transformMenu.add(new JMenuItem("Rotacionar"));
-        transformMenu.add(new JMenuItem("Espelhar"));
-        transformMenu.add(new JMenuItem("Aumentar"));
-        transformMenu.add(new JMenuItem("Diminuir"));
-        menuBar.add(transformMenu);
+        TransformacoesGeometricasMenu transformacoesMenu = new TransformacoesGeometricasMenu(imagePanel);
+        menuBar.add(transformacoesMenu.getTransformMenu());
     }
+
 
     private void createFilterMenu() {
         JMenu filterMenu = new JMenu("Filtros");
