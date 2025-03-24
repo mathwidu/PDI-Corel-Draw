@@ -66,6 +66,30 @@ public class TransformacoesGeometricas {
         return new ImageMatrix(novaMatriz);
     }
 
-    // Os outros métodos (espelhar, escalar)
+    public static ImageMatrix espelhar (ImageMatrix imagem, boolean horizontal){
+        int[][] original = imagem.getPixelMatrix();
+        int altura = original.length;
+        int largura = original[0].length;
+
+        int[][] novaMatriz = new int[altura][largura];
+        for (int y = 0; y < altura; y++) {
+            for (int x = 0; x < largura; x++) {
+                int novoX;
+                int novoY;
+
+                if(horizontal){
+                    novoX = largura - 1 - x;
+                    novoY = y;
+                }
+                else{
+                    novoX = largura - 1 - x;
+                    novoY = altura - 1 - y;
+                }
+                novaMatriz[novoY][novoX] = original[y][x];
+            }
+        }
+        return new ImageMatrix(novaMatriz);
+    }
+    // Os outros métodos (aumentar e diminuir)...
 
 }

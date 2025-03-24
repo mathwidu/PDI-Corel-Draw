@@ -58,6 +58,25 @@ public class TransformacoesGeometricasMenu {
                     imagemTransformada = TransformacoesGeometricas.rotacionar(imagemOriginal, angulo);
                     break;
 
+                case "espelhamento":
+                    String[] opcoes = {"Horizontal", "Vertical"};
+                    int escolha = JOptionPane.showOptionDialog(
+                            null,
+                            "Escolha o tipo de espelhamento:",
+                            "Espelhamento",
+                            JOptionPane.DEFAULT_OPTION,
+                            JOptionPane.QUESTION_MESSAGE,
+                            null,
+                            opcoes,
+                            opcoes[0]
+                    );
+
+                    // Define o valor de horizontal com base na escolha
+                    boolean horizontal = (escolha == 0); // 0 = Horizontal, 1 = Vertical
+
+                    imagemTransformada = TransformacoesGeometricas.espelhar(imagemOriginal, horizontal);
+                    break;
+
                 // Os outros casos ainda serão implementados
                 default:
                     JOptionPane.showMessageDialog(null, "Transformação não reconhecida.", "Erro", JOptionPane.ERROR_MESSAGE);
