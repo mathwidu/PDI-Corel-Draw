@@ -24,7 +24,7 @@ public class ImagePanel extends JPanel {
 
     public void setOriginalImageMatrix(ImageMatrix imageMatrix) {
         this.originalImageMatrix = imageMatrix;
-        this.transformedImageMatrix = null; // Resetamos a transformada ao carregar nova imagem
+        this.transformedImageMatrix = null;
         atualizarExibicao();
     }
 

@@ -53,6 +53,11 @@ public class TransformacoesGeometricasMenu {
                     imagemTransformada = TransformacoesGeometricas.transladar(imagemOriginal, dx, dy);
                     break;
 
+                case "rotacao":
+                    double angulo = Double.parseDouble(JOptionPane.showInputDialog("Ângulo de rotação (graus):"));
+                    imagemTransformada = TransformacoesGeometricas.rotacionar(imagemOriginal, angulo);
+                    break;
+
                 // Os outros casos ainda serão implementados
                 default:
                     JOptionPane.showMessageDialog(null, "Transformação não reconhecida.", "Erro", JOptionPane.ERROR_MESSAGE);
