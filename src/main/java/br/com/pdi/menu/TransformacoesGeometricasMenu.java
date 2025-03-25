@@ -77,6 +77,18 @@ public class TransformacoesGeometricasMenu {
                     imagemTransformada = TransformacoesGeometricas.espelhar(imagemOriginal, horizontal);
                     break;
 
+                case "escalonamento_aumento":
+                    double escalaAumento = Double.parseDouble(JOptionPane.showInputDialog("Fator de escala (>1):"));
+                    imagemTransformada = TransformacoesGeometricas.escalar(imagemOriginal, escalaAumento, escalaAumento);
+                    break;
+
+                case "escalonamento_diminuicao":
+                    double escalaReducao = Double.parseDouble(JOptionPane.showInputDialog("Fator de escala (<1):"));
+                    imagemTransformada = TransformacoesGeometricas.escalar(imagemOriginal, escalaReducao, escalaReducao);
+                    break;
+
+
+
                 // Os outros casos ainda serão implementados
                 default:
                     JOptionPane.showMessageDialog(null, "Transformação não reconhecida.", "Erro", JOptionPane.ERROR_MESSAGE);

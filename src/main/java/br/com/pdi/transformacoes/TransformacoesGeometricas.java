@@ -11,7 +11,13 @@ public class TransformacoesGeometricas {
 
         int novaAltura = altura + Math.abs(dy);
         int novaLargura = largura + Math.abs(dx);
+
         int[][] novaMatriz = new int[novaAltura][novaLargura];
+        for (int y = 0; y < altura; y++) {
+            for (int x = 0; x < largura; x++) {
+                novaMatriz[y][x] = 0xFFFFFFFF; // branco (ARGB)
+            }
+        }
 
         for (int y = 0; y < altura; y++) {
             for (int x = 0; x < largura; x++) {
@@ -90,6 +96,34 @@ public class TransformacoesGeometricas {
         }
         return new ImageMatrix(novaMatriz);
     }
-    // Os outros métodos (aumentar e diminuir)...
 
+    public static ImageMatrix escalar(ImageMatrix imagem, double sx, double sy){
+        int[][] original = imagem.getPixelMatrix();
+        int altura = original.length;
+        int largura = original[0].length;
+
+        int novaLargura = (int) (altura * sx);
+        int novaAltura = (int) (largura * sy);
+
+        int[][] novaMatriz = new int[novaAltura][novaLargura];
+        for (int y = 0; y < altura; y++) {
+            for (int x = 0; x < largura; x++) {
+                novaMatriz[y][x] = 0xFFFFFFFF; // branco (ARGB)
+            }
+        }
+
+        for(int y = 0; y < novaAltura; y++){
+            for(int x = 0; x < novaLargura; x++){
+                // Mapeia o pixel de volta para o original (coordenadas inversas)
+                int origemX = (int) (x / sx);
+                int origemY = (int) (y / sy);
+
+                // Verifica se está dentro dos limites da imagem original
+                if (origemX < largura && origemY < altura) {
+                    novaMatriz[y][x] = original[origemY][origemX];
+                }
+            }
+        }
+        return new ImageMatrix(novaMatriz);
+    }
 }
