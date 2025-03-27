@@ -44,10 +44,11 @@ public class ImagePanel extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        atualizarExibicao();
+        // Removido o atualizarExibicao() para evitar loop de repaint
     }
 
-    private void atualizarExibicao() {
+    // Agora público para ser chamado externamente
+    public void atualizarExibicao() {
         int panelWidth = getWidth() / 2;
         int panelHeight = getHeight();
 
