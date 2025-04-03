@@ -32,12 +32,8 @@ public class MenuBarHandler {
 
 
     private void createFilterMenu() {
-        JMenu filterMenu = new JMenu("Filtros");
-        filterMenu.add(new JMenuItem("Grayscale"));
-        filterMenu.add(new JMenuItem("Passa Baixa"));
-        filterMenu.add(new JMenuItem("Passa Alta"));
-        filterMenu.add(new JMenuItem("Threshold"));
-        menuBar.add(filterMenu);
+        FilterMenu filterMenu = new FilterMenu(imagePanel);
+        menuBar.add(filterMenu.getFilterMenu());
     }
 
     private void createMorphologyMenu() {
