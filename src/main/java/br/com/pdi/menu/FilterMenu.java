@@ -44,7 +44,7 @@ public class FilterMenu {
         try {
             switch (tipo) {
                 case "grayscale":
-                    JOptionPane.showMessageDialog(null, "Filtro Grayscale ainda não implementado.");
+                    imagemFiltrada = br.com.pdi.filters.Filter.aplicarGrayscale(imagemOriginal);
                     break;
 
                 case "passa_baixa":
