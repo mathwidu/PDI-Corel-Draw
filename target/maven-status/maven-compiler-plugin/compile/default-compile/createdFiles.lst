@@ -1,0 +1,10 @@
+br/com/pdi/menu/FileMenu.class
+br/com/pdi/menu/FilterMenu.class
+br/com/pdi/transformacoes/TransformacoesGeometricas.class
+br/com/pdi/filters/Filter.class
+br/com/pdi/menu/TransformacoesGeometricasMenu.class
+br/com/pdi/view/PDIInterface$1.class
+br/com/pdi/model/ImageMatrix.class
+br/com/pdi/view/ImagePanel.class
+br/com/pdi/menu/MenuBarHandler.class
+br/com/pdi/view/PDIInterface.class

@@ -48,7 +48,7 @@ public class FilterMenu {
                     break;
 
                 case "passa_baixa":
-                    JOptionPane.showMessageDialog(null, "Filtro Passa Baixa ainda não implementado.");
+                    imagemFiltrada = br.com.pdi.filters.Filter.aplicarPassaBaixa(imagemOriginal);
                     break;
 
                 case "passa_alta":

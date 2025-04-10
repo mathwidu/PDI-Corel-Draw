@@ -50,20 +50,23 @@ public class ImagePanel extends JPanel {
     public void atualizarExibicao() {
         int panelWidth = getWidth() / 2;
         int panelHeight = getHeight();
-
+    
         if (panelWidth == 0 || panelHeight == 0) return;
-
+    
         if (originalImageMatrix != null) {
             originalImageLabel.setIcon(new ImageIcon(escalarImagem(originalImageMatrix.toBufferedImage(), panelWidth, panelHeight)));
+            originalImageLabel.setText(null); // 🔧 Remove o texto de fundo
         }
-
+    
         if (transformedImageMatrix != null) {
             transformedImageLabel.setIcon(new ImageIcon(escalarImagem(transformedImageMatrix.toBufferedImage(), panelWidth, panelHeight)));
+            transformedImageLabel.setText(null); // 🔧 Remove o texto de fundo
         } else {
             transformedImageLabel.setIcon(null);
-            transformedImageLabel.setText("Imagem Transformada");
+            transformedImageLabel.setText("Imagem Transformada"); // texto padrão quando não tem imagem
         }
     }
+    
 
     private Image escalarImagem(BufferedImage image, int maxWidth, int maxHeight) {
         double aspectRatio = (double) image.getWidth() / image.getHeight();
