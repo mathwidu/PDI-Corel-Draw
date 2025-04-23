@@ -163,7 +163,109 @@ public class Filter {
     
 
     public static ImageMatrix aplicarThreshold(ImageMatrix imagem, int limiar) {
-        // binarização da imagem
-        return imagem;
+        int[][] original = imagem.getPixelMatrix();
+        int altura = original.length;
+        int largura = original[0].length;
+        int[][] novaMatriz = new int[altura][largura];
+    
+        for (int y = 0; y < altura; y++) {
+            for (int x = 0; x < largura; x++) {
+                int pixel = original[y][x];
+    
+                int alpha = (pixel >> 24) & 0xFF;
+                int red = (pixel >> 16) & 0xFF;
+    
+                int binario = red >= limiar ? 255 : 0;
+                int novoPixel = (alpha << 24) | (binario << 16) | (binario << 8) | binario;
+    
+                novaMatriz[y][x] = novoPixel;
+            }
+        }
+    
+        return new ImageMatrix(novaMatriz);
     }
+    
+
+    public static ImageMatrix aplicarPassaAltaComThreshold(ImageMatrix imagem, int threshold) {
+        int[][] original = imagem.getPixelMatrix();
+        int altura = original.length;
+        int largura = original[0].length;
+        int[][] novaMatriz = new int[altura][largura];
+    
+        int[][] sobelX = {
+            {-1, 0, 1},
+            {-2, 0, 2},
+            {-1, 0, 1}
+        };
+    
+        int[][] sobelY = {
+            {1, 2, 1},
+            {0, 0, 0},
+            {-1, -2, -1}
+        };
+    
+        for (int y = 1; y < altura - 1; y++) {
+            for (int x = 1; x < largura - 1; x++) {
+                int gx = 0, gy = 0;
+    
+                for (int ky = 0; ky < 3; ky++) {
+                    for (int kx = 0; kx < 3; kx++) {
+                        int pixel = original[y + ky - 1][x + kx - 1];
+                        int gray = (pixel >> 16) & 0xFF;
+    
+                        gx += gray * sobelX[ky][kx];
+                        gy += gray * sobelY[ky][kx];
+                    }
+                }
+    
+                int magnitude = (int) Math.sqrt(gx * gx + gy * gy);
+                magnitude = magnitude > threshold ? 255 : 0;
+    
+                int alpha = (original[y][x] >> 24) & 0xFF;
+                novaMatriz[y][x] = (alpha << 24) | (magnitude << 16) | (magnitude << 8) | magnitude;
+            }
+        }
+    
+        return new ImageMatrix(novaMatriz);
+    }
+
+    public static ImageMatrix aplicarPassaBaixaComKernel(ImageMatrix imagem, int tamanhoKernel) {
+        int[][] original = imagem.getPixelMatrix();
+        int altura = original.length;
+        int largura = original[0].length;
+        int[][] novaMatriz = new int[altura][largura];
+    
+        int offset = tamanhoKernel / 2;
+        int kernelArea = tamanhoKernel * tamanhoKernel;
+    
+        for (int y = offset; y < altura - offset; y++) {
+            for (int x = offset; x < largura - offset; x++) {
+                int somaR = 0, somaG = 0, somaB = 0;
+    
+                for (int ky = -offset; ky <= offset; ky++) {
+                    for (int kx = -offset; kx <= offset; kx++) {
+                        int pixel = original[y + ky][x + kx];
+                        int r = (pixel >> 16) & 0xFF;
+                        int g = (pixel >> 8) & 0xFF;
+                        int b = pixel & 0xFF;
+    
+                        somaR += r;
+                        somaG += g;
+                        somaB += b;
+                    }
+                }
+    
+                int mediaR = somaR / kernelArea;
+                int mediaG = somaG / kernelArea;
+                int mediaB = somaB / kernelArea;
+                int alpha = (original[y][x] >> 24) & 0xFF;
+    
+                int novoPixel = (alpha << 24) | (mediaR << 16) | (mediaG << 8) | mediaB;
+                novaMatriz[y][x] = novoPixel;
+            }
+        }
+    
+        return new ImageMatrix(novaMatriz);
+    }
+    
 }

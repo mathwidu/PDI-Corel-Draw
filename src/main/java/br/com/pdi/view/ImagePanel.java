@@ -47,7 +47,7 @@ public class ImagePanel extends JPanel {
     public void setOriginalImageMatrix(ImageMatrix imageMatrix) {
         this.originalImageMatrix = imageMatrix;
         this.transformedImageMatrix = null;
-        historicoEdicoes.clear(); // limpa o histórico ao abrir nova imagem
+        historicoEdicoes.clear(); 
         atualizarExibicao();
     }
 
