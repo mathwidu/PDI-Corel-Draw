@@ -37,14 +37,10 @@ public class MenuBarHandler {
     }
 
     private void createMorphologyMenu() {
-        JMenu morphologyMenu = new JMenu("Morfologia Matemática");
-        morphologyMenu.add(new JMenuItem("Dilatação"));
-        morphologyMenu.add(new JMenuItem("Erosão"));
-        morphologyMenu.add(new JMenuItem("Abertura"));
-        morphologyMenu.add(new JMenuItem("Fechamento"));
-        menuBar.add(morphologyMenu);
+        MorphologyMenu morphologyMenu = new MorphologyMenu(imagePanel);
+        menuBar.add(morphologyMenu.getMenu());
     }
-
+    
     private void createFeatureMenu() {
         JMenu featureMenu = new JMenu("Extração de Características");
         featureMenu.add(new JMenuItem("Desafio"));

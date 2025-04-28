@@ -58,23 +58,30 @@ public class FileMenu {
     }
 
     private void saveImage() {
-        if (imagePanel.getTransformedImageMatrix() == null) {
-            JOptionPane.showMessageDialog(frame, "Nenhuma imagem transformada para salvar!", "Erro", JOptionPane.ERROR_MESSAGE);
+        ImageMatrix imagemParaSalvar = imagePanel.getTransformedImageMatrix();
+        
+        if (imagemParaSalvar == null) {
+            imagemParaSalvar = imagePanel.getOriginalImageMatrix();
+        }
+    
+        if (imagemParaSalvar == null) {
+            JOptionPane.showMessageDialog(frame, "Nenhuma imagem para salvar!", "Erro", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
+    
         JFileChooser fileChooser = new JFileChooser();
         int returnValue = fileChooser.showSaveDialog(frame);
         if (returnValue == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
             try {
-                ImageIO.write(imagePanel.getTransformedImageMatrix().toBufferedImage(), "png", file);
+                ImageIO.write(imagemParaSalvar.toBufferedImage(), "png", file);
                 JOptionPane.showMessageDialog(frame, "Imagem salva com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(frame, "Erro ao salvar imagem!", "Erro", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
+    
 
     public JMenu getFileMenu() {
         return fileMenu;

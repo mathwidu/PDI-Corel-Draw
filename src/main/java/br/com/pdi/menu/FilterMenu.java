@@ -104,23 +104,28 @@ public class FilterMenu {
         dialog.setVisible(true);
     }
 
-    private void aplicarPassaAltaInterativo() {
+    private void aplicarPassaBaixaInterativo() {
         if (imagePanel.getOriginalImageMatrix() == null) return;
 
-        ImageMatrix imagemCinza = Filter.aplicarGrayscale(imagePanel.getOriginalImageMatrix());
+        ImageMatrix imagemOriginal = imagePanel.getOriginalImageMatrix();
 
-        JDialog dialog = new JDialog((JFrame) SwingUtilities.getWindowAncestor(imagePanel), "Filtro Passa Alta", true);
+        JDialog dialog = new JDialog((JFrame) SwingUtilities.getWindowAncestor(imagePanel), "Filtro Passa Baixa", true);
         dialog.setLayout(new BorderLayout());
         dialog.setSize(400, 130);
         dialog.setLocationRelativeTo(imagePanel);
 
-        JLabel label = new JLabel("Threshold: 128");
-        JSlider slider = new JSlider(0, 255, 128);
+        JLabel label = new JLabel("Kernel: 3x3");
+        JSlider slider = new JSlider(1, 3, 1);
+
+        int valorInicial = slider.getValue();
+        int kernelSizeInicial = valorInicial * 2 + 1;
+        imagePanel.setTransformedImageMatrix(Filter.aplicarPassaBaixaComKernel(imagemOriginal, kernelSizeInicial));
 
         slider.addChangeListener(e -> {
-            int threshold = slider.getValue();
-            label.setText("Threshold: " + threshold);
-            imagePanel.setTransformedImageMatrix(Filter.aplicarPassaAltaComThreshold(imagemCinza, threshold));
+            int valor = slider.getValue();
+            int kernelSize = valor * 2 + 1;
+            label.setText("Kernel: " + kernelSize + "x" + kernelSize);
+            imagePanel.setTransformedImageMatrix(Filter.aplicarPassaBaixaComKernel(imagemOriginal, kernelSize));
         });
 
         JPanel painel = new JPanel(new BorderLayout());
@@ -144,24 +149,26 @@ public class FilterMenu {
         dialog.setVisible(true);
     }
 
-    private void aplicarPassaBaixaInterativo() {
+    private void aplicarPassaAltaInterativo() {
         if (imagePanel.getOriginalImageMatrix() == null) return;
 
-        ImageMatrix imagemOriginal = imagePanel.getOriginalImageMatrix();
+        ImageMatrix imagemCinza = Filter.aplicarGrayscale(imagePanel.getOriginalImageMatrix());
 
-        JDialog dialog = new JDialog((JFrame) SwingUtilities.getWindowAncestor(imagePanel), "Filtro Passa Baixa", true);
+        JDialog dialog = new JDialog((JFrame) SwingUtilities.getWindowAncestor(imagePanel), "Filtro Passa Alta", true);
         dialog.setLayout(new BorderLayout());
         dialog.setSize(400, 130);
         dialog.setLocationRelativeTo(imagePanel);
 
-        JLabel label = new JLabel("Kernel: 3x3");
-        JSlider slider = new JSlider(1, 3, 1); // 3x3, 5x5, 7x7
+        JLabel label = new JLabel("Threshold: 128");
+        JSlider slider = new JSlider(0, 255, 128);
+
+        int thresholdInicial = slider.getValue();
+        imagePanel.setTransformedImageMatrix(Filter.aplicarPassaAltaComThreshold(imagemCinza, thresholdInicial));
 
         slider.addChangeListener(e -> {
-            int valor = slider.getValue();
-            int kernelSize = valor * 2 + 1;
-            label.setText("Kernel: " + kernelSize + "x" + kernelSize);
-            imagePanel.setTransformedImageMatrix(Filter.aplicarPassaBaixaComKernel(imagemOriginal, kernelSize));
+            int threshold = slider.getValue();
+            label.setText("Threshold: " + threshold);
+            imagePanel.setTransformedImageMatrix(Filter.aplicarPassaAltaComThreshold(imagemCinza, threshold));
         });
 
         JPanel painel = new JPanel(new BorderLayout());
@@ -197,6 +204,9 @@ public class FilterMenu {
 
         JLabel label = new JLabel("Limiar: 128");
         JSlider slider = new JSlider(0, 255, 128);
+
+        int limiarInicial = slider.getValue();
+        imagePanel.setTransformedImageMatrix(Filter.aplicarThreshold(imagemCinza, limiarInicial));
 
         slider.addChangeListener(e -> {
             int limiar = slider.getValue();
