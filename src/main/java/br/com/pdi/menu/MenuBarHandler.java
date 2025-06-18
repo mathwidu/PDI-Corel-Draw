@@ -48,7 +48,8 @@ public class MenuBarHandler {
     // Cria o menu de Extração de Características (placeholder para futuros desafios)
     private void createFeatureMenu() {
         JMenu featureMenu = new JMenu("Extração de Características");
-        featureMenu.add(new JMenuItem("Desafio")); // Ainda não implementado, apenas visual
+        menuBar.add(new DesafioMenu(imagePanel));
+ // Ainda não implementado, apenas visual
         menuBar.add(featureMenu);
     }
 

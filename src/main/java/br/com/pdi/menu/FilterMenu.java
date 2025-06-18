@@ -27,6 +27,7 @@ public class FilterMenu {
         JMenuItem passaAltaItem = new JMenuItem("Passa Alta");
         JMenuItem thresholdItem = new JMenuItem("Threshold");
         JMenuItem brilhoContrasteItem = new JMenuItem("Brilho e Contraste");
+        JMenuItem binarizarItem = new JMenuItem("Binarizar"); // Novo item
 
         // Define o que acontece ao clicar em cada opção
         grayscaleItem.addActionListener(e -> aplicarFiltroSimples("grayscale"));
@@ -35,12 +36,28 @@ public class FilterMenu {
         thresholdItem.addActionListener(e -> aplicarThresholdInterativo());
         brilhoContrasteItem.addActionListener(e -> aplicarBrilhoContrasteInterativo());
 
+        // Ação do botão de Binarizar (grayscale + threshold fixo)
+        binarizarItem.addActionListener(e -> {
+            if (imagePanel.getOriginalImageMatrix() == null) {
+                JOptionPane.showMessageDialog(null, "Nenhuma imagem carregada.");
+                return;
+            }
+
+            // Aplica escala de cinza e depois threshold fixo
+            ImageMatrix cinza = Filter.aplicarGrayscale(imagePanel.getOriginalImageMatrix());
+            ImageMatrix binarizada = Filter.aplicarThreshold(cinza, 128);
+
+            imagePanel.setTransformedImageMatrix(binarizada);
+            imagePanel.repaint();
+        });
+
         // Adiciona todos os itens no menu de filtros
         filtrosMenu.add(grayscaleItem);
         filtrosMenu.add(passaBaixaItem);
         filtrosMenu.add(passaAltaItem);
         filtrosMenu.add(thresholdItem);
         filtrosMenu.add(brilhoContrasteItem);
+        filtrosMenu.add(binarizarItem); // Adiciona ao menu
     }
 
     // Aplica filtros que não precisam de interação (ex: Grayscale)
